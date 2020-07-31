@@ -8,8 +8,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "axios": "^0.19.2",
     "next": "9.5.0",
     "react": "16.13.1",
-    "react-dom": "16.13.1"
+    "react-dom": "16.13.1",
+    "react-table": "^6.11.5",
+    "match-sorter": "^4.2.0",
+    "serverless-mysql": "^1.5.4",
+    "sql-template-strings": "^2.2.2",
+    "toastr": "^2.1.4"
   }
 }
