@@ -80,7 +80,7 @@ const ListadoClientes = ({ list }) => {
                     <div>
                       <Link
                         href={{
-                          pathname: "/servicio/nuevo",
+                          pathname: "/servicios/nuevo",
                           query: {
                             id: row.original.idcliente,
                           },
@@ -93,7 +93,7 @@ const ListadoClientes = ({ list }) => {
                           title="Cargar Servicio"
                         >
                           <i
-                            class="fa fa-shopping-basket"
+                            className="fa fa-shopping-basket"
                             aria-hidden="true"
                           ></i>
                         </button>
@@ -112,7 +112,7 @@ const ListadoClientes = ({ list }) => {
                           data-placement="top"
                           title="Editar"
                         >
-                          <i class="fa fa-pencil" aria-hidden="true"></i>
+                          <i className="fa fa-pencil" aria-hidden="true"></i>
                         </button>
                       </Link>
 
@@ -122,7 +122,7 @@ const ListadoClientes = ({ list }) => {
                         data-placement="top"
                         title="Eliminar"
                       >
-                        <i class="fa fa-trash-o" aria-hidden="true"></i>
+                        <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </button>
                     </div>
                   ),

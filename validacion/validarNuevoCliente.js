@@ -2,10 +2,10 @@ export default function validarNuevoCliente(valores) {
   let errores = {};
 
   if (!valores.nombre) {
-    errores.nombre = "La nombre es obligatoria";
+    errores.nombre = "El nombre es obligatorio";
   }
   if (!valores.apellido) {
-    errores.apellido = "La apellido es obligatoria";
+    errores.apellido = "El apellido es obligatorio";
   }
 
   return errores;

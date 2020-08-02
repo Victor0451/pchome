@@ -11,6 +11,7 @@ const NuevoCliente = ({
   handleSubmit,
   handleBlur,
 }) => {
+
   return (
     <div className="container alert alert-primary border border-dark mt-4 mb-4 p-4">
       <h2>

@@ -4,7 +4,7 @@ import Admin from "./Admin";
 const NavBar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a href={"/home/home"} className="navbar-brand">
+      <a href={"/"} className="navbar-brand">
        | PC Home - Servicio Tecnico |
       </a>
       <button
