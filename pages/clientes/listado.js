@@ -12,7 +12,6 @@ const listado = () => {
       .get("http://192.168.1.102:5010/api/clientes/listado")
       .then((res) => {
         guardarList(res.data);
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);

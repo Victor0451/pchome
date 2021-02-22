@@ -6,14 +6,14 @@ import Link from "next/link";
 const ListadoClientes = ({ list }) => {
   if (!list) return <div>CARGANDO ...</div>;
   return (
-    <div className="container mt-4 p-4 border border-dark">
+    <div className="container mt-4 p-4 border border-dark alert alert-primary">
       <h2 className=" mb-4">
         <strong>
           <u>Listado de Clientes</u>
         </strong>
       </h2>
 
-      <div className=" mt-4 border border-dark">
+      <div className=" mt-4 border border-dark list">
         <ReactTable
           data={list}
           filterable
@@ -87,15 +87,29 @@ const ListadoClientes = ({ list }) => {
                         }}
                       >
                         <button
-                          className="btn btn-info mr-1"
+                          className="btn btn-info btn-sm mr-1"
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Cargar Servicio"
                         >
-                          <i
-                            className="fa fa-shopping-basket"
-                            aria-hidden="true"
-                          ></i>
+                          <i className="fa fa-upload" aria-hidden="true"></i>
+                        </button>
+                      </Link>{" "}
+                      <Link
+                        href={{
+                          pathname: "/servicios/servicioscliente",
+                          query: {
+                            id: row.original.idcliente,
+                          },
+                        }}
+                      >
+                        <button
+                          className="btn btn-success btn-sm mr-1"
+                          data-toggle="tooltip"
+                          data-placement="top"
+                          title="Ver Servicios"
+                        >
+                          <i className="fa fa-eye" aria-hidden="true"></i>
                         </button>
                       </Link>
                       <Link
@@ -107,7 +121,7 @@ const ListadoClientes = ({ list }) => {
                         }}
                       >
                         <button
-                          className="btn btn-warning mr-1"
+                          className="btn btn-warning btn-sm mr-1"
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Editar"
@@ -115,9 +129,8 @@ const ListadoClientes = ({ list }) => {
                           <i className="fa fa-pencil" aria-hidden="true"></i>
                         </button>
                       </Link>
-
                       <button
-                        className="btn btn-danger mr-1"
+                        className="btn btn-danger btn-sm mr-1"
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Eliminar"
