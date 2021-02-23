@@ -13,6 +13,7 @@ const STATE_INICIAL = {
   dni: "",
   domicilio: "",
   telefono: "",
+  alias: "",
 };
 
 const nuevo = () => {
@@ -24,7 +25,7 @@ const nuevo = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarNuevoCliente, nuevoCliente);
 
-  const { nombre, apellido, dni, domicilio, telefono } = valores;
+  const { nombre, apellido, dni, domicilio, telefono, alias } = valores;
 
   async function nuevoCliente() {
     const cliente = {
@@ -33,10 +34,11 @@ const nuevo = () => {
       dni: dni,
       domicilio: domicilio,
       telefono: telefono,
+      alias: alias,
     };
 
     await axios
-      .post("http://192.168.1.104:5010/api/clientes/nuevo", cliente)
+      .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
@@ -56,6 +58,7 @@ const nuevo = () => {
         dni={dni}
         telefono={telefono}
         domicilio={domicilio}
+        alias={alias}
         errores={errores}
         handleChange={handleChange}
         handleSubmit={handleSubmit}

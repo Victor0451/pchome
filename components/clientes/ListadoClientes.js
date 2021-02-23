@@ -2,9 +2,50 @@ import React from "react";
 import ReactTable from "react-table";
 import matchSorter from "match-sorter";
 import Link from "next/link";
+import Spinner from "../layouts/Spinner";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import axios from "axios";
 
 const ListadoClientes = ({ list }) => {
-  if (!list) return <div>CARGANDO ...</div>;
+  if (!list) return <Spinner />;
+
+  const deleteClient = async (id) => {
+    await axios
+      .delete(`http://190.231.32.232:5010/api/clientes/eliminarcliente/${id}`)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          toastr.success("Cliente Eliminado!", "ATENCION");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const eliminarCliente = (id) => {
+    confirmAlert({
+      title: "ATENCION!!",
+      message: "¿Estas seguro de eliminar al cliente?",
+      buttons: [
+        {
+          label: "Si",
+          onClick: () => {
+            deleteClient(id);
+
+            setTimeout(() => {
+              window.location.reload();
+            }, 300);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
   return (
     <div className="container mt-4 p-4 border border-dark alert alert-primary">
       <h2 className=" mb-4">
@@ -29,7 +70,7 @@ const ListadoClientes = ({ list }) => {
                   filterMethod: (filter, rows) =>
                     matchSorter(rows, filter.value, { keys: ["nombre"] }),
                   filterAll: true,
-                  width: 170,
+                  width: 150,
                 },
                 {
                   Header: "Apellido",
@@ -38,7 +79,16 @@ const ListadoClientes = ({ list }) => {
                   filterMethod: (filter, rows) =>
                     matchSorter(rows, filter.value, { keys: ["apellido"] }),
                   filterAll: true,
-                  width: 170,
+                  width: 150,
+                },
+                {
+                  Header: "Alias",
+                  id: "alias",
+                  accessor: (d) => d.alias,
+                  filterMethod: (filter, rows) =>
+                    matchSorter(rows, filter.value, { keys: ["alias"] }),
+                  filterAll: true,
+                  width: 150,
                 },
                 {
                   Header: "DNI",
@@ -47,7 +97,7 @@ const ListadoClientes = ({ list }) => {
                   filterMethod: (filter, rows) =>
                     matchSorter(rows, filter.value, { keys: ["dni"] }),
                   filterAll: true,
-                  width: 170,
+                  width: 100,
                 },
 
                 {
@@ -57,7 +107,7 @@ const ListadoClientes = ({ list }) => {
                   filterMethod: (filter, rows) =>
                     matchSorter(rows, filter.value, { keys: ["domicilio"] }),
                   filterAll: true,
-                  width: 170,
+                  width: 200,
                 },
 
                 {
@@ -67,7 +117,7 @@ const ListadoClientes = ({ list }) => {
                   filterMethod: (filter, rows) =>
                     matchSorter(rows, filter.value, { keys: ["telefono"] }),
                   filterAll: true,
-                  width: 170,
+                  width: 130,
                 },
                 {
                   Header: "Acciones",
@@ -116,7 +166,7 @@ const ListadoClientes = ({ list }) => {
                         href={{
                           pathname: "/clientes/editar",
                           query: {
-                            id: `${row.original.ptm_ficha}-${row.original.ptm_fechasol}`,
+                            id: `${row.original.idcliente}`,
                           },
                         }}
                       >
@@ -134,6 +184,7 @@ const ListadoClientes = ({ list }) => {
                         data-toggle="tooltip"
                         data-placement="top"
                         title="Eliminar"
+                        onClick={() => eliminarCliente(row.original.idcliente)}
                       >
                         <i className="fa fa-trash-o" aria-hidden="true"></i>
                       </button>

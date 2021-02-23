@@ -1,25 +1,27 @@
 import React from "react";
+import Spinner from "../layouts/Spinner";
 
-const NuevoCliente = ({
-  nombre,
-  apellido,
-  dni,
-  telefono,
-  domicilio,
-  alias,
+const EditarCliente = ({
+  cliente,
+  nombreRef,
+  apellidoRef,
+  dniRef,
+  telefonoRef,
+  domicilioRef,
+  aliasRef,
   errores,
-  handleChange,
-  handleSubmit,
-  handleBlur,
+  editarCliente,
 }) => {
+  if (!cliente) return <Spinner />;
+
   return (
     <div className="container alert alert-primary border border-dark mt-4 mb-4 p-4">
       <h2>
         <strong>
-          <u>Nuevo Cliente</u>
+          <u>Editar Cliente</u>
         </strong>
       </h2>
-      <form className="mt-4 border border-dark p-4" onSubmit={handleSubmit}>
+      <form className="mt-4 border border-dark p-4">
         <div className="row">
           <div className="form-group col-md-4">
             <label>
@@ -32,15 +34,9 @@ const NuevoCliente = ({
               type="text"
               className="form-control"
               name="apellido"
-              value={apellido}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              defaultValue={cliente.apellido}
+              ref={apellidoRef}
             />
-            {errores.apellido && (
-              <div className="mt-2 form-group  alert alert-danger">
-                {errores.apellido}
-              </div>
-            )}
           </div>
           <div className="form-group col-md-4">
             <label>
@@ -53,15 +49,9 @@ const NuevoCliente = ({
               type="text"
               className="form-control"
               name="nombre"
-              value={nombre}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              defaultValue={cliente.nombre}
+              ref={nombreRef}
             />
-            {errores.nombre && (
-              <div className="mt-2 form-group  alert alert-danger">
-                {errores.nombre}
-              </div>
-            )}
           </div>
           <div className="form-group col-md-4">
             <label>
@@ -74,9 +64,8 @@ const NuevoCliente = ({
               type="text"
               className="form-control"
               name="alias"
-              value={alias}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              defaultValue={cliente.alias}
+              ref={aliasRef}
             />
           </div>
           <div className="form-group col-md-4">
@@ -90,9 +79,8 @@ const NuevoCliente = ({
               type="text"
               className="form-control"
               name="dni"
-              value={dni}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              ref={dniRef}
+              defaultValue={cliente.dni}
             />
           </div>
           <div className="form-group col-md-4">
@@ -106,9 +94,8 @@ const NuevoCliente = ({
               type="text"
               className="form-control"
               name="domicilio"
-              value={domicilio}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              defaultValue={cliente.domicilio}
+              ref={domicilioRef}
             />
           </div>
 
@@ -123,14 +110,22 @@ const NuevoCliente = ({
               type="text"
               className="form-control"
               name="telefono"
-              value={telefono}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              defaultValue={cliente.telefono}
+              ref={telefonoRef}
             />
           </div>
 
-          <div className="form-group col-md-4">
-            <button className="btn btn-primary btn-block mt-4" type="submit">
+          {errores && (
+            <div className="mt-2 form-group col-md-12 alert alert-danger text-center text-uppercase">
+              {errores}
+            </div>
+          )}
+
+          <div className="form-group col-md-12">
+            <button
+              className="btn btn-primary btn-block mt-4"
+              onClick={editarCliente}
+            >
               Registrar
             </button>
           </div>
@@ -140,4 +135,4 @@ const NuevoCliente = ({
   );
 };
 
-export default NuevoCliente;
+export default EditarCliente;

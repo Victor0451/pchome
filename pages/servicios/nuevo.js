@@ -13,6 +13,7 @@ import validarServicio from "../../validacion/validarServicio";
 const STATE_INICIAL = {
   detalle: "",
   servicio: "",
+  empresa: "",
 };
 
 const nuevo = () => {
@@ -24,10 +25,9 @@ const nuevo = () => {
 
   const traerCliente = async (id) => {
     await axios
-      .get(`http://192.168.1.102:5010/api/clientes/cliente/${id}`)
+      .get(`http://190.231.32.232:5010/api/clientes/cliente/${id}`)
       .then((res) => {
         guardarCliente(res.data);
-        console.log(res.data);
       })
       .catch((error) => {
         console.log(error);
@@ -49,7 +49,7 @@ const nuevo = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarServicio, nuevoServicio);
 
-  const { detalle, importe } = valores;
+  const { detalle, importe, empresa } = valores;
 
   async function nuevoServicio() {
     const servicio = {
@@ -57,36 +57,40 @@ const nuevo = () => {
       detalle: detalle,
       importe: importe,
       fecha: moment().format("YYYY-MM-DD"),
+      empresa: empresa,
+      estado: 3,
+      deuda: importe
     };
 
-    console.log(servicio);
 
     await axios
-      .post("http://192.168.1.102:5010/api/servicios/nuevo", servicio)
+      .post("http://190.231.32.232:5010/api/servicios/nuevo", servicio)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
           toastr.success("Servicio Registrado!", "ATENCION");
-          let idserv = res.data.idservicio
-          console.log(idserv, "id")
+          let idserv = res.data.idservicio;
+          console.log(idserv, "id");
           confirmAlert({
             title: "ATENCION!!",
-            message: "Va a pagar el servicio?",
+            message: "¿Va a pagar el servicio?",
             buttons: [
               {
                 label: "Si",
                 onClick: () => {
                   Router.push({
                     pathname: `/pagos/nuevo`,
-                    query: { id: idserv }
-                  })
-
+                    query: { id: idserv },
+                  });
                 },
               },
               {
                 label: "No",
                 onClick: () => {
-                  Router.push("/servicios/listado");
+                  Router.push({
+                    pathname: `/servicios/servicioscliente/`,
+                    query: { id: cliente.idcliente },
+                  });
                 },
               },
             ],
@@ -106,6 +110,7 @@ const nuevo = () => {
         errores={errores}
         detalle={detalle}
         importe={importe}
+        empresa={empresa}
         handleBlur={handleBlur}
         handleChange={handleChange}
         handleSubmit={handleSubmit}

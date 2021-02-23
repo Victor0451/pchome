@@ -22,7 +22,7 @@ const servicioscliente = () => {
 
   const traerCliente = async (id) => {
     await axios
-      .get(`http://192.168.1.102:5010/api/clientes/cliente/${id}`)
+      .get(`http://190.231.32.232:5010/api/clientes/cliente/${id}`)
       .then((res) => {
         guardarCliente(res.data);
       })
@@ -32,7 +32,7 @@ const servicioscliente = () => {
   };
   const traerServiciosCliente = async (id) => {
     await axios
-      .get(`http://192.168.1.102:5010/api/servicios/servicioscliente/${id}`)
+      .get(`http://190.231.32.232:5010/api/servicios/servicioscliente/${id}`)
       .then((res) => {
         guardarServicios(res.data);
       })
