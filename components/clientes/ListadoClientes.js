@@ -40,7 +40,7 @@ const ListadoClientes = ({ list }) => {
         },
         {
           label: "No",
-          onClick: () => {},
+          onClick: () => { },
         },
       ],
     });
@@ -198,6 +198,7 @@ const ListadoClientes = ({ list }) => {
           className="-striped -highlight"
         />
       </div>
+
     </div>
   );
 };

@@ -37,17 +37,37 @@ const nuevo = () => {
       alias: alias,
     };
 
-    await axios
-      .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
-      .then((res) => {
-        console.log(res);
-        if (res.status === 200) {
-          toastr.success("Cliente Registrado!", "ATENCION");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    if (cliente.dni === "") {
+      cliente.dni = 0
+      if (cliente.telefono === "") {
+        cliente.telefono = 0
+
+        await axios
+          .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
+          .then((res) => {
+            console.log(res);
+            if (res.status === 200) {
+              toastr.success("Cliente Registrado!", "ATENCION");
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      }
+    } else {
+      await axios
+        .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
+        .then((res) => {
+          console.log(res);
+          if (res.status === 200) {
+            toastr.success("Cliente Registrado!", "ATENCION");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   return (

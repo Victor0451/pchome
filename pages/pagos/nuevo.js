@@ -56,17 +56,33 @@ const nuevo = () => {
                 if (res.status === 200) {
                     toastr.success("El pago se registro correctamente", "ATENCION")
 
-                    const param = {
-                        estado: estado,
-                        deuda: pago.deuda
+
+                    if (servicio.pago === 0) {
+                        const param = {
+                            estado: estado,
+                            deuda: pago.deuda,
+                            pago: pago.importe
+                        }
+                        axios
+                            .put(`http://190.231.32.232:5010/api/servicios/putestado/${servicio.idservicio}`, param)
+                            .then(res => { console.log(res.status) })
+                            .catch(error => {
+                                console.log(error)
+                            })
+                    } else if (servicio.pago > 0) {
+                        const param = {
+                            estado: estado,
+                            deuda: pago.deuda,
+                            pago: parseInt(pago.importe) + parseInt(servicio.pago)
+                        }
+                        axios
+                            .put(`http://190.231.32.232:5010/api/servicios/putestado/${servicio.idservicio}`, param)
+                            .then(res => { console.log(res.status) })
+                            .catch(error => {
+                                console.log(error)
+                            })
                     }
 
-                    axios
-                        .put(`http://190.231.32.232:5010/api/servicios/putestado/${servicio.idservicio}`, param)
-                        .then(res => { console.log(res.status) })
-                        .catch(error => {
-                            console.log(error)
-                        })
                 }
             })
             .catch((error) => {
@@ -75,9 +91,17 @@ const nuevo = () => {
     };
 
     const calcDeuda = () => {
-        let pago = document.getElementById("importe").value;
-        let deuda = servicio.importe - pago;
-        guardarDeuda(deuda);
+        if (servicio.estado === 3) {
+            let pago = document.getElementById('importe').value
+            let deuda = servicio.importe - pago;
+            guardarDeuda(deuda);
+        } else if (servicio.estado === 2) {
+            let pago = document.getElementById('importe').value
+            let deuda = servicio.deuda - pago;
+            guardarDeuda(deuda);
+        }
+
+
     };
 
     let nuevoPago = (e) => {
@@ -105,17 +129,25 @@ const nuevo = () => {
                         label: "Si",
                         onClick: () => {
                             registrarPagos(pago, 2);
+
+                            setTimeout(() => {
+                                Router.push({
+                                    pathname: `/factura/imprimir`,
+                                    query: { id: servicio.idservicio }
+
+                                });
+                            }, 200);
                         },
                     },
                     {
                         label: "No",
                         onClick: () => {
 
-                            setTimeout(() => {
-                                Router.push({
-                                    pathname: `/clientes/listado`
-                                });
-                            }, 300);
+
+                            Router.push({
+                                pathname: `/clientes/listado`
+                            });
+
 
                         },
                     },
@@ -132,19 +164,26 @@ const nuevo = () => {
                 buttons: [
                     {
                         label: "Si",
-                        onClick: () => { },
+                        onClick: () => {
+
+                            Router.push({
+                                pathname: `/factura/imprimir`,
+                                query: { id: servicio.idservicio }
+
+                            });
+                        },
                     },
                     {
                         label: "No",
                         onClick: () => {
 
-                            setTimeout(() => {
-                                Router.push({
-                                    pathname: `/servicios/servicioscliente`,
-                                    query: { id: cliente.idcliente }
 
-                                });
-                            }, 300);
+                            Router.push({
+                                pathname: `/servicios/servicioscliente`,
+                                query: { id: cliente.idcliente }
+
+                            });
+
 
                         },
                     },

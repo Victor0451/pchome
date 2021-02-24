@@ -3,6 +3,7 @@ import ReactTable from "react-table";
 import matchSorter from "match-sorter";
 import Link from "next/link";
 import Spinner from "../layouts/Spinner";
+import servicioscliente from "../../pages/servicios/servicioscliente";
 
 const ListadoServicioCliente = ({ listado, cliente }) => {
   return (
@@ -39,6 +40,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["empresa"] }),
                       filterAll: true,
+                      width: 100
                     },
                     {
                       Header: "Detalle",
@@ -47,6 +49,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["detalle"] }),
                       filterAll: true,
+                      width: 300
                     },
                     {
                       Header: "Importe",
@@ -55,18 +58,29 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["importe"] }),
                       filterAll: true,
+                      width: 100
                     },
                     {
-                      Header: "Pagado",
+                      Header: "Pago",
+                      id: "pago",
+                      accessor: (d) => d.pago,
+                      filterMethod: (filter, rows) =>
+                        matchSorter(rows, filter.value, { keys: ["pago"] }),
+                      filterAll: true,
+                      width: 100
+                    },
+                    {
+                      Header: "Deuda",
                       id: "deuda",
                       accessor: (d) => d.deuda,
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["deuda"] }),
                       filterAll: true,
+                      width: 100
                     },
                     {
-                      Header: "Pagado",
-
+                      Header: "Estado",
+                      width: 100,
                       Cell: (row) => (
                         <div>
                           {row.original.estado === 1 ? (
@@ -78,6 +92,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                           ) : null}
                         </div>
                       ),
+
                     },
 
                     {
@@ -87,6 +102,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["idcliente"] }),
                       filterAll: true,
+
                       Cell: (row) => (
                         <div>
                           {row.original.estado === 2 ||
@@ -115,10 +131,10 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
 
                           <Link
                             href={{
-                              pathname: "/pagos/nuevo",
-                              query: {
-                                id: `${row.original.idservicio}`,
-                              },
+                              // pathname: "/pagos/nuevo",
+                              // query: {
+                              //   id: `${row.original.idservicio}`,
+                              // },
                             }}
                           >
                             <button
@@ -130,6 +146,45 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                               <i className="fa fa-pencil" aria-hidden="true"></i>
                             </button>
                           </Link>
+
+                          <Link
+                            href={{
+                              pathname: "/pagos/historial",
+                              query: {
+                                id: `${row.original.idservicio}`,
+                              },
+                            }}
+                          >
+                            <button
+                              className="btn btn-primary btn-sm mr-1"
+                              data-toggle="tooltip"
+                              data-placement="top"
+                              title="Historial de Pagos"
+                            >
+                              <i className="fa fa-history" aria-hidden="true"></i>
+                            </button>
+                          </Link>
+
+                          {row.original.estado === 1 ? (
+                            <Link
+                              href={{
+                                pathname: "/factura/imprimir",
+                                query: {
+                                  id: `${row.original.idservicio}`,
+                                },
+                              }}
+                            >
+                              <button
+                                className="btn btn-secondary btn-sm mr-1"
+                                data-toggle="tooltip"
+                                data-placement="top"
+                                title="Imprimir Factura"
+                              >
+                                <i className="fa fa-ticket" aria-hidden="true"></i>
+                              </button>
+                            </Link>
+                          ) : null}
+
 
                           <button
                             className="btn btn-danger btn-sm mr-1"
@@ -150,6 +205,10 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
             />
           </div>
         )}
+
+      <div className="mt-4 d-flex justify-content-end">
+        <a className="btn btn-danger " href="/clientes/listado" >Listado de Clientes</a>
+      </div>
     </div>
   );
 };

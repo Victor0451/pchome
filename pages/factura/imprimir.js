@@ -7,10 +7,13 @@ import axios from "axios";
 import moment from "moment";
 import toastr from "toastr";
 import ImprimirFactura from "../../components/factura/ImprimirFactura";
+import DetalleFactura from "../../components/factura/DetalleFactura";
+
 
 const imprimir = () => {
   const [servicio, guardarServicio] = useState(null);
   const [cliente, guardarCliente] = useState(null);
+  const [historial, guardarHistorial] = useState(null)
 
   let router = useRouter();
 
@@ -18,6 +21,8 @@ const imprimir = () => {
     let id = router.query.id;
 
     traerServicio(id);
+
+    traerPagos(id)
   }, []);
 
   const traerServicio = async (id) => {
@@ -44,9 +49,54 @@ const imprimir = () => {
       });
   };
 
+  const traerPagos = async (id) => {
+    await axios
+      .get(`http://190.231.32.232:5010/api/pagos/historial/${id}`)
+      .then((res) => {
+        guardarHistorial(res.data);
+
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  const imprimir = () => {
+    let contenido = document.getElementById("print").innerHTML;
+    let contenidoOrg = document.body.innerHTML;
+
+    document.body.innerHTML = contenido;
+
+    window.print();
+
+    document.body.innerHTML = contenidoOrg;
+  };
+
   return (
     <Layout>
-      <ImprimirFactura servicio={servicio} cliente={cliente} />
+      <div className="mt-4 mb-4 container alert alert-primary border border-dark p-4 list" id="print">
+        <h2>
+          <strong>
+            <u>PC-HOME: Servicio Tecnico</u>
+          </strong>
+        </h2>
+        <ImprimirFactura servicio={servicio} cliente={cliente} historial={historial} />
+        <DetalleFactura historial={historial} />
+      </div>
+      <div className="mt-4 container border border-dark alert alert-primary">
+        <h2>
+          <strong>
+            <u>Opciones</u>
+          </strong>
+        </h2>
+        <div className="mt-4 d-flex justify-content-center">
+          <button className="btn btn-primary " onClick={imprimir}>Imprimir</button>
+          <a className="btn btn-danger ml-1 " href="/clientes/listado" >Listado de Clientes</a>
+
+        </div>
+
+      </div>
+
     </Layout>
   );
 };

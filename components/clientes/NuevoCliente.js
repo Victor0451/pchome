@@ -87,9 +87,9 @@ const NuevoCliente = ({
               </strong>
             </label>
             <input
-              type="text"
+              type="number"
               className="form-control"
-              name="dni"
+              name="dni"              
               value={dni}
               onChange={handleChange}
               onBlur={handleBlur}
@@ -120,7 +120,7 @@ const NuevoCliente = ({
               </strong>
             </label>
             <input
-              type="text"
+              type="number"
               className="form-control"
               name="telefono"
               value={telefono}

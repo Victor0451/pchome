@@ -9,7 +9,7 @@ const listado = () => {
 
   const traerClientes = async () => {
     await axios
-      .get("http://192.168.1.102:5010/api/clientes/listado")
+      .get("http://190.231.32.232:5010/api/clientes/listado")
       .then((res) => {
         guardarList(res.data);
       })

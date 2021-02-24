@@ -93,21 +93,43 @@ const NuevoPago = ({
             />
           </div>
 
-          <div className="form-group col-md-4">
-            <label>
-              <strong>
-                {" "}
-                <u> Importe: </u>
-              </strong>
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              name="nombre"
-              defaultValue={servicio.importe}
-              readOnly
-            />
-          </div>
+          {servicio.estado === 2 ? (
+            <div className="form-group col-md-4">
+              <label>
+                <strong>
+                  {" "}
+                  <u> Importe: </u>
+                </strong>
+              </label>
+              <input
+                type="text"
+                className="form-control"
+                name="nombre"
+                defaultValue={servicio.deuda}
+                readOnly
+              />
+            </div>
+
+          ) : (
+
+              <div className="form-group col-md-4">
+                <label>
+                  <strong>
+                    {" "}
+                    <u> Importe: </u>
+                  </strong>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="nombre"
+                  defaultValue={servicio.importe}
+                  readOnly
+                />
+              </div>
+
+
+            )}
         </div>
 
         <div className=" mt-4 border border-dark p-4 ">
@@ -132,6 +154,7 @@ const NuevoPago = ({
                 defaultValue={fecha}
               />
             </div>
+
 
             <div className="form-group col-md-4">
               <label>
