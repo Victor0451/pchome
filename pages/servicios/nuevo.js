@@ -59,7 +59,8 @@ const nuevo = () => {
       fecha: moment().format("YYYY-MM-DD"),
       empresa: empresa,
       estado: 3,
-      deuda: importe
+      deuda: importe,
+      pago: 0
     };
 
 

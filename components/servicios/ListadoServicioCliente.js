@@ -165,7 +165,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                             </button>
                           </Link>
 
-                          {row.original.estado === 1 ? (
+                          {row.original.estado === 1 || row.original.estado === 2 ? (
                             <Link
                               href={{
                                 pathname: "/factura/imprimir",
