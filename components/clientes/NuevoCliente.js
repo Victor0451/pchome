@@ -89,10 +89,9 @@ const NuevoCliente = ({
             <input
               type="number"
               className="form-control"
-              name="dni"              
-              value={dni}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              name="dni"
+              ref={dni}
+              defaultValue="0"
             />
           </div>
           <div className="form-group col-md-4">
@@ -123,9 +122,8 @@ const NuevoCliente = ({
               type="number"
               className="form-control"
               name="telefono"
-              value={telefono}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              ref={telefono}
+              defaultValue="0"
             />
           </div>
 

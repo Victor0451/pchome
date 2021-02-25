@@ -17,6 +17,9 @@ const STATE_INICIAL = {
 };
 
 const nuevo = () => {
+  const telefonoRef = React.createRef()
+  const dniRef = React.createRef()
+
   const {
     valores,
     errores,
@@ -25,49 +28,32 @@ const nuevo = () => {
     handleBlur,
   } = useValidacion(STATE_INICIAL, validarNuevoCliente, nuevoCliente);
 
-  const { nombre, apellido, dni, domicilio, telefono, alias } = valores;
+  const { nombre, apellido, domicilio, alias } = valores;
 
   async function nuevoCliente() {
     const cliente = {
       nombre: nombre,
       apellido: apellido,
-      dni: dni,
+      dni: dniRef.current.value,
       domicilio: domicilio,
-      telefono: telefono,
+      telefono: telefonoRef.current.value,
       alias: alias,
     };
 
+    await axios
+      .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          toastr.success("Cliente Registrado!", "ATENCION");
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
 
-    if (cliente.dni === "") {
-      cliente.dni = 0
-      if (cliente.telefono === "") {
-        cliente.telefono = 0
 
-        await axios
-          .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
-          .then((res) => {
-            console.log(res);
-            if (res.status === 200) {
-              toastr.success("Cliente Registrado!", "ATENCION");
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      }
-    } else {
-      await axios
-        .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
-        .then((res) => {
-          console.log(res);
-          if (res.status === 200) {
-            toastr.success("Cliente Registrado!", "ATENCION");
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
+
   }
 
   return (
@@ -75,8 +61,8 @@ const nuevo = () => {
       <NuevoCliente
         nombre={nombre}
         apellido={apellido}
-        dni={dni}
-        telefono={telefono}
+        dni={dniRef}
+        telefono={telefonoRef}
         domicilio={domicilio}
         alias={alias}
         errores={errores}
