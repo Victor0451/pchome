@@ -118,6 +118,14 @@ const ListadoClientes = ({ list }) => {
                     matchSorter(rows, filter.value, { keys: ["telefono"] }),
                   filterAll: true,
                   width: 130,
+                  Cell: (row) => (
+                    <div>
+                      <u>
+                        <a href={`https://wa.me/549${row.original.telefono}`}>{row.original.telefono}</a>
+                      </u>
+                    </div>
+
+                  )
                 },
                 {
                   Header: "Acciones",

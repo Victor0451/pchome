@@ -33,6 +33,16 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                 {
                   Header: "Listado de Servicios",
                   columns: [
+                    
+                    {
+                      Header: "Fecha",
+                      id: "fecha",
+                      accessor: (d) => d.fecha,
+                      filterMethod: (filter, rows) =>
+                        matchSorter(rows, filter.value, { keys: ["fecha"] }),
+                      filterAll: true,
+                      width: 110
+                    },
                     {
                       Header: "Empresa",
                       id: "empresa",
@@ -58,7 +68,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["importe"] }),
                       filterAll: true,
-                      width: 100
+                      width: 90
                     },
                     {
                       Header: "Pago",
@@ -67,7 +77,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["pago"] }),
                       filterAll: true,
-                      width: 100
+                      width: 90
                     },
                     {
                       Header: "Deuda",
@@ -76,7 +86,7 @@ const ListadoServicioCliente = ({ listado, cliente }) => {
                       filterMethod: (filter, rows) =>
                         matchSorter(rows, filter.value, { keys: ["deuda"] }),
                       filterAll: true,
-                      width: 100
+                      width: 90
                     },
                     {
                       Header: "Estado",
