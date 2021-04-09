@@ -6,6 +6,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import axios from "axios";
 import moment from "moment";
 import toastr from "toastr";
+import { ip } from '../../config/config'
 
 import useValidacion from "../../hooks/useValidacion";
 import validarServicio from "../../validacion/validarServicio";
@@ -25,7 +26,7 @@ const nuevo = () => {
 
   const traerCliente = async (id) => {
     await axios
-      .get(`http://190.231.32.232:5010/api/clientes/cliente/${id}`)
+      .get(`${ip}api/clientes/cliente/${id}`)
       .then((res) => {
         guardarCliente(res.data);
       })
@@ -65,7 +66,7 @@ const nuevo = () => {
 
 
     await axios
-      .post("http://190.231.32.232:5010/api/servicios/nuevo", servicio)
+      .post(`{ip}api/servicios/nuevo`, servicio)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {

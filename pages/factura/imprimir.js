@@ -8,6 +8,7 @@ import moment from "moment";
 import toastr from "toastr";
 import ImprimirFactura from "../../components/factura/ImprimirFactura";
 import DetalleFactura from "../../components/factura/DetalleFactura";
+import { ip } from '../../config/config'
 
 
 const imprimir = () => {
@@ -27,14 +28,14 @@ const imprimir = () => {
 
   const traerServicio = async (id) => {
     await axios
-      .get(`http://192.168.1.102:5010/api/servicios/servicio/${id}`)
+      .get(`${ip}api/servicios/servicio/${id}`)
       .then((res) => {
         guardarServicio(res.data);
         console.log(res.data);
 
         axios
           .get(
-            `http://192.168.1.102:5010/api/clientes/cliente/${res.data.idcliente}`
+            `${ip}api/clientes/cliente/${res.data.idcliente}`
           )
           .then((res) => {
             guardarCliente(res.data);
@@ -51,7 +52,7 @@ const imprimir = () => {
 
   const traerPagos = async (id) => {
     await axios
-      .get(`http://190.231.32.232:5010/api/pagos/historial/${id}`)
+      .get(`${ip}api/pagos/historial/${id}`)
       .then((res) => {
         guardarHistorial(res.data);
 

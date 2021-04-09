@@ -3,13 +3,14 @@ import Layout from "../../components/layouts/Layout";
 import ListadoClientes from "../../components/clientes/ListadoClientes";
 import toastr from "toastr";
 import axios from "axios";
+import { ip } from '../../config/config'
 
 const listado = () => {
   const [list, guardarList] = useState(null);
 
   const traerClientes = async () => {
     await axios
-      .get("http://190.231.32.232:5010/api/clientes/listado")
+      .get(`${ip}api/clientes/listado`)
       .then((res) => {
         guardarList(res.data);
       })

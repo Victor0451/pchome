@@ -6,6 +6,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import axios from "axios";
 import moment from "moment";
 import toastr from "toastr";
+import { ip } from '../../config/'
 
 const nuevo = () => {
     const importeRef = React.createRef();
@@ -27,14 +28,14 @@ const nuevo = () => {
 
     const traerServicio = async (id) => {
         await axios
-            .get(`http://190.231.32.232:5010/api/servicios/servicio/${id}`)
+            .get(`${ip}api/servicios/servicio/${id}`)
             .then((res) => {
                 guardarServicio(res.data);
                 console.log(res.data);
 
                 axios
                     .get(
-                        `http://190.231.32.232:5010/api/clientes/cliente/${res.data.idcliente}`
+                        `${ip}api/clientes/cliente/${res.data.idcliente}`
                     )
                     .then((res) => {
                         guardarCliente(res.data);
@@ -51,7 +52,7 @@ const nuevo = () => {
 
     const registrarPagos = async (pago, estado) => {
         await axios
-            .post(`http://190.231.32.232:5010/api/pagos/nuevo`, pago)
+            .post(`${ip}api/pagos/nuevo`, pago)
             .then((res) => {
                 if (res.status === 200) {
                     toastr.success("El pago se registro correctamente", "ATENCION")
@@ -64,7 +65,7 @@ const nuevo = () => {
                             pago: pago.importe
                         }
                         axios
-                            .put(`http://190.231.32.232:5010/api/servicios/putestado/${servicio.idservicio}`, param)
+                            .put(`${ip}api/servicios/putestado/${servicio.idservicio}`, param)
                             .then(res => { console.log(res.status) })
                             .catch(error => {
                                 console.log(error)
@@ -76,7 +77,7 @@ const nuevo = () => {
                             pago: parseInt(pago.importe) + parseInt(servicio.pago)
                         }
                         axios
-                            .put(`http://190.231.32.232:5010/api/servicios/putestado/${servicio.idservicio}`, param)
+                            .put(`${ip}api/servicios/putestado/${servicio.idservicio}`, param)
                             .then(res => { console.log(res.status) })
                             .catch(error => {
                                 console.log(error)

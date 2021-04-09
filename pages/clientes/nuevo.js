@@ -6,6 +6,7 @@ import axios from "axios";
 
 import useValidacion from "../../hooks/useValidacion";
 import validarNuevoCliente from "../../validacion/validarNuevoCliente";
+import { ip } from '../../config/config'
 
 const STATE_INICIAL = {
   nombre: "",
@@ -41,7 +42,7 @@ const nuevo = () => {
     };
 
     await axios
-      .post("http://190.231.32.232:5010/api/clientes/nuevo", cliente)
+      .post(`${ip}api/clientes/nuevo`, cliente)
       .then((res) => {
         console.log(res);
         if (res.status === 200) {

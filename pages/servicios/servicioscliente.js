@@ -6,6 +6,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import axios from "axios";
 import moment from "moment";
 import toastr from "toastr";
+import { ip } from '../../config/config'
 
 const servicioscliente = () => {
   const [servicios, guardarServicios] = useState(null);
@@ -22,7 +23,7 @@ const servicioscliente = () => {
 
   const traerCliente = async (id) => {
     await axios
-      .get(`http://190.231.32.232:5010/api/clientes/cliente/${id}`)
+      .get(`${ip}api/clientes/cliente/${id}`)
       .then((res) => {
         guardarCliente(res.data);
       })
@@ -32,7 +33,7 @@ const servicioscliente = () => {
   };
   const traerServiciosCliente = async (id) => {
     await axios
-      .get(`http://190.231.32.232:5010/api/servicios/servicioscliente/${id}`)
+      .get(`${ip}api/servicios/servicioscliente/${id}`)
       .then((res) => {
         guardarServicios(res.data);
       })

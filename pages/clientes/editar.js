@@ -5,6 +5,7 @@ import toastr from "toastr";
 import axios from "axios";
 import EditarCliente from "../../components/clientes/EditarCliente";
 import { confirmAlert } from "react-confirm-alert"; // Import
+import { ip } from '../../config/config'
 
 const editar = () => {
     const [errores, guardarErrores] = useState(null);
@@ -27,7 +28,7 @@ const editar = () => {
 
     const traerCliente = async (id) => {
         await axios
-            .get(`http://190.231.32.232:5010/api/clientes/cliente/${id}`)
+            .get(`${ip}api/clientes/cliente/${id}`)
             .then((res) => {
                 guardarCliente(res.data);
             })
@@ -64,7 +65,7 @@ const editar = () => {
                         label: "Si",
                         onClick: async () => {
                             await axios
-                                .put(`http://190.231.32.232:5010/api/clientes/editar/${cliente.idcliente}`, client)
+                                .put(`${ip}api/clientes/editar/${cliente.idcliente}`, client)
                                 .then((res) => {
                                     if (res.status === 200) {
                                         toastr.success("El cliente se edito con exito", "ATENCION");

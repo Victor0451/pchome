@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import ServiciosSinAbonar from "../components/home/ServiciosSinAbonar";
 import Layout from "../components/layouts/Layout";
 import axios from 'axios'
+import { ip } from '../config/config'
 
 const index = () => {
 
@@ -16,7 +17,7 @@ const index = () => {
 
 
   const traerServiciosSinPagar = async () => {
-    await axios.get(`http://190.231.32.232:5010/api/servicios/listadosinpagar`)
+    await axios.get(`${ip}api/servicios/listadosinpagar`)
       .then(res => {
         guardarServicios(res.data)
 
