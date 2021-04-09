@@ -6,7 +6,7 @@ import { confirmAlert } from "react-confirm-alert"; // Import
 import axios from "axios";
 import moment from "moment";
 import toastr from "toastr";
-import { ip } from '../../config/'
+import { ip } from '../../config/config'
 
 const nuevo = () => {
     const importeRef = React.createRef();
